@@ -89,31 +89,51 @@
       margin:0;
       font-weight: 600;
       letter-spacing: -0.03em;
-      line-height: 1.06;
-      /* Always keep the slogan on a single line; scale responsively to fit */
-      font-size: clamp(18px, 6.2vw, 64px);
-      white-space: nowrap;
+      line-height: 1.08;
+
+      /* Responsive type that can wrap naturally */
+      font-size: clamp(28px, 6vw, 68px);
+      white-space: normal;
+      overflow-wrap: break-word;
+      text-wrap: balance; /* supported in modern browsers; harmless fallback elsewhere */
     }
 
     .grad{
       background: linear-gradient(90deg,
         rgba(255,255,255,.92) 0%,
-        rgba(255,255,255,.92) 38%,
-        rgba(0,255,209,.86) 64%,
+        rgba(255,255,255,.92) 40%,
+        rgba(0,255,209,.86) 68%,
         rgba(109,83,255,.88) 100%);
-      background-size: 240% 100%;
+
+      /* smoother, loop-safe motion (no snap back) */
+      background-size: 200% 100%;
       background-position: 0% 50%;
+
       -webkit-background-clip:text;
       background-clip:text;
       color: transparent;
       -webkit-text-fill-color: transparent;
-      animation: gradShift 6.5s ease-in-out infinite;
-      will-change: background-position;
+
+      animation:
+        titleIn 700ms cubic-bezier(.22, 1, .36, 1) both,
+        gradShift 8s ease-in-out infinite alternate;
+      will-change: background-position, transform, opacity;
+    }
+
+    @keyframes titleIn{
+      from{
+        opacity:0;
+        transform: translateY(10px);
+      }
+      to{
+        opacity:1;
+        transform: translateY(0);
+      }
     }
 
     @keyframes gradShift{
-      from { background-position: -120% 50%; }
-      to   { background-position:  120% 50%; }
+      from { background-position: 0% 50%; }
+      to   { background-position: 100% 50%; }
     }
 
     .slogan::after{
@@ -186,26 +206,30 @@
           linear-gradient(180deg, var(--bg0), var(--bg1));
       }
       body::after{ opacity:.035; }
+
       .grad{
         background: linear-gradient(90deg,
           rgba(10,14,26,.94) 0%,
-          rgba(10,14,26,.94) 40%,
+          rgba(10,14,26,.94) 42%,
           rgba(0,150,125,.84) 72%,
           rgba(92,60,210,.88) 100%);
-        background-size: 240% 100%;
+        background-size: 200% 100%;
         background-position: 0% 50%;
         -webkit-background-clip:text;
         background-clip:text;
         color: transparent;
         -webkit-text-fill-color: transparent;
-        animation: gradShift 6.5s linear infinite;
+
+        animation:
+          titleIn 700ms cubic-bezier(.22, 1, .36, 1) both,
+          gradShift 8s ease-in-out infinite alternate;
       }
     }
 
     /* Accessibility: reduce visual noise if user prefers reduced motion */
     @media (prefers-reduced-motion: reduce){
       body::after{ opacity:.03; }
-      .grad{ animation: none; }
+      .grad{ animation: none; background-position: 50% 50%; }
     }
   </style>
 </head>
