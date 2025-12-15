@@ -90,19 +90,30 @@
       font-weight: 600;
       letter-spacing: -0.03em;
       line-height: 1.06;
-      font-size: clamp(30px, 4.8vw, 64px);
-      text-wrap: balance;
+      /* Always keep the slogan on a single line; scale responsively to fit */
+      font-size: clamp(18px, 6.2vw, 64px);
+      white-space: nowrap;
     }
 
     .grad{
       background: linear-gradient(90deg,
         rgba(255,255,255,.92) 0%,
-        rgba(255,255,255,.92) 44%,
-        rgba(0,255,209,.86) 72%,
+        rgba(255,255,255,.92) 38%,
+        rgba(0,255,209,.86) 64%,
         rgba(109,83,255,.88) 100%);
+      background-size: 240% 100%;
+      background-position: 0% 50%;
       -webkit-background-clip:text;
       background-clip:text;
       color: transparent;
+      -webkit-text-fill-color: transparent;
+      animation: gradShift 6.5s ease-in-out infinite;
+      will-change: background-position;
+    }
+
+    @keyframes gradShift{
+      from { background-position: -120% 50%; }
+      to   { background-position:  120% 50%; }
     }
 
     .slogan::after{
@@ -178,18 +189,23 @@
       .grad{
         background: linear-gradient(90deg,
           rgba(10,14,26,.94) 0%,
-          rgba(10,14,26,.94) 48%,
-          rgba(0,150,125,.82) 74%,
-          rgba(92,60,210,.86) 100%);
+          rgba(10,14,26,.94) 40%,
+          rgba(0,150,125,.84) 72%,
+          rgba(92,60,210,.88) 100%);
+        background-size: 240% 100%;
+        background-position: 0% 50%;
         -webkit-background-clip:text;
         background-clip:text;
         color: transparent;
+        -webkit-text-fill-color: transparent;
+        animation: gradShift 6.5s linear infinite;
       }
     }
 
     /* Accessibility: reduce visual noise if user prefers reduced motion */
     @media (prefers-reduced-motion: reduce){
       body::after{ opacity:.03; }
+      .grad{ animation: none; }
     }
   </style>
 </head>
