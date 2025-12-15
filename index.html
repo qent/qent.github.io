@@ -7,7 +7,6 @@
   <title>qent — Quality-Engineered Neural Tools</title>
   <meta name="description" content="qent — Quality-Engineered Neural Tools" />
 
-  <!-- Clean, modern AI-startup typeface (with robust fallbacks) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&display=swap" rel="stylesheet">
@@ -19,9 +18,16 @@
       --fg0:rgba(255,255,255,.92);
       --fg1:rgba(255,255,255,.60);
       --line:rgba(255,255,255,.08);
-      --a1: rgba(109, 83, 255, .55); /* violet */
-      --a2: rgba(0, 255, 209, .42);   /* mint */
-      --a3: rgba(0, 176, 255, .26);   /* cyan */
+
+      /* Text gradient stops (intentionally no near-black stops) */
+      --g1: rgba(255,255,255,.96);
+      --g2: rgba(0,255,209,.90);
+      --g3: rgba(0,176,255,.88);
+      --g4: rgba(170,140,255,.94);
+      --g5: rgba(255,104,200,.88);
+
+      /* One “tile” width for perfect looping */
+      --gradW: clamp(560px, 120vw, 1600px);
     }
 
     *{ box-sizing:border-box; }
@@ -39,7 +45,6 @@
       overflow:hidden;
     }
 
-    /* Flat, technical overlays: grid + scanline + micro-noise */
     body::before{
       content:"";
       position:fixed;
@@ -78,7 +83,6 @@
       position:relative;
     }
 
-    /* Centered slogan: no card, no blur, just type + a precise underline */
     .slogan{
       text-align:center;
       max-width: 980px;
@@ -91,49 +95,49 @@
       letter-spacing: -0.03em;
       line-height: 1.08;
 
-      /* Responsive type that can wrap naturally */
       font-size: clamp(28px, 6vw, 68px);
       white-space: normal;
       overflow-wrap: break-word;
-      text-wrap: balance; /* supported in modern browsers; harmless fallback elsewhere */
+      text-wrap: balance;
     }
 
     .grad{
-      background: linear-gradient(90deg,
-        rgba(255,255,255,.92) 0%,
-        rgba(255,255,255,.92) 40%,
-        rgba(0,255,209,.86) 68%,
-        rgba(109,83,255,.88) 100%);
+      display:inline-block;
 
-      /* smoother, loop-safe motion (no snap back) */
-      background-size: 200% 100%;
-      background-position: 0% 50%;
+      /* Seamless looping gradient tile (start and end colors match) */
+      background-image: linear-gradient(90deg,
+        var(--g1) 0%,
+        var(--g2) 18%,
+        var(--g3) 38%,
+        var(--g4) 60%,
+        var(--g5) 82%,
+        var(--g1) 100%);
+
+      background-size: var(--gradW) 100%;
+      background-repeat: repeat;
+      background-position: 0px 50%;
 
       -webkit-background-clip:text;
       background-clip:text;
       color: transparent;
       -webkit-text-fill-color: transparent;
 
+      /* IMPORTANT: one-direction loop (no alternate) */
       animation:
         titleIn 700ms cubic-bezier(.22, 1, .36, 1) both,
-        gradShift 8s ease-in-out infinite alternate;
+        gradLoop 6.8s linear infinite;
       will-change: background-position, transform, opacity;
     }
 
     @keyframes titleIn{
-      from{
-        opacity:0;
-        transform: translateY(10px);
-      }
-      to{
-        opacity:1;
-        transform: translateY(0);
-      }
+      from{ opacity:0; transform: translateY(10px); }
+      to  { opacity:1; transform: translateY(0); }
     }
 
-    @keyframes gradShift{
-      from { background-position: 0% 50%; }
-      to   { background-position: 100% 50%; }
+    /* “по кругу” слева направо: сдвигаем ровно на ширину тайла */
+    @keyframes gradLoop{
+      from { background-position: 0px 50%; }
+      to   { background-position: var(--gradW) 50%; }
     }
 
     .slogan::after{
@@ -147,7 +151,6 @@
       background: linear-gradient(90deg, transparent, rgba(255,255,255,.22), transparent);
     }
 
-    /* Accent vector (flat): thin corner marks around the text */
     .marks{
       position:absolute;
       inset: -22px -26px;
@@ -170,7 +173,6 @@
         linear-gradient(var(--line), var(--line)) right 0 bottom 0 / 1px 22px no-repeat;
     }
 
-    /* Bottom copyright (flat, no pill) */
     footer{
       position:fixed;
       left:0;
@@ -189,7 +191,6 @@
       user-select:none;
     }
 
-    /* Light mode (keeps flat look) */
     @media (prefers-color-scheme: light){
       :root{
         --bg0:#F8FAFF;
@@ -197,7 +198,15 @@
         --fg0:rgba(8,12,22,.92);
         --fg1:rgba(8,12,22,.56);
         --line:rgba(8,12,22,.12);
+
+        /* Light mode: still colored, no black-like stops */
+        --g1: rgba(30,120,255,.96);
+        --g2: rgba(0,190,170,.92);
+        --g3: rgba(0,150,255,.92);
+        --g4: rgba(150,95,255,.92);
+        --g5: rgba(255,90,180,.90);
       }
+
       body{
         background:
           radial-gradient(1100px 600px at 50% -12%, rgba(109,83,255,.20), transparent 60%),
@@ -206,30 +215,11 @@
           linear-gradient(180deg, var(--bg0), var(--bg1));
       }
       body::after{ opacity:.035; }
-
-      .grad{
-        background: linear-gradient(90deg,
-          rgba(10,14,26,.94) 0%,
-          rgba(10,14,26,.94) 42%,
-          rgba(0,150,125,.84) 72%,
-          rgba(92,60,210,.88) 100%);
-        background-size: 200% 100%;
-        background-position: 0% 50%;
-        -webkit-background-clip:text;
-        background-clip:text;
-        color: transparent;
-        -webkit-text-fill-color: transparent;
-
-        animation:
-          titleIn 700ms cubic-bezier(.22, 1, .36, 1) both,
-          gradShift 8s ease-in-out infinite alternate;
-      }
     }
 
-    /* Accessibility: reduce visual noise if user prefers reduced motion */
     @media (prefers-reduced-motion: reduce){
       body::after{ opacity:.03; }
-      .grad{ animation: none; background-position: 50% 50%; }
+      .grad{ animation: none; background-position: 0px 50%; }
     }
   </style>
 </head>
@@ -246,7 +236,6 @@
   </footer>
 
   <script>
-    // "текущий год + qent (c)"
     (function(){
       const year = new Date().getFullYear();
       document.getElementById('copyright').textContent = `© ${year} qent`;
