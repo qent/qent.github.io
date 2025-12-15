@@ -4,9 +4,14 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="color-scheme" content="dark light" />
-  <title>qent — Quality-Engineered Neural Tools</title>
-  <meta name="description" content="qent — Quality-Engineered Neural Tools" />
+  <title>QENT — Quality-Engineered Neural Tools</title>
+  <meta name="description" content="QENT — Quality-Engineered Neural Tools" />
 
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" sizes="any" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJuZW8iIHgxPSI4IiB5MT0iOCIgeDI9IjU2IiB5Mj0iNTYiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNGRjRGRDgiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMyRUYyRTIiLz48L2xpbmVhckdyYWRpZW50PjxyYWRpYWxHcmFkaWVudCBpZD0iYmciIGN4PSIzMCUiIGN5PSIyNSUiIHI9Ijg1JSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMEIxNjMwIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMDcwQTE0Ii8+PC9yYWRpYWxHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9InVybCgjYmcpIi8+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIxOSIgc3Ryb2tlPSJ1cmwoI25lbykiIHN0cm9rZS13aWR0aD0iMTAiIG9wYWNpdHk9IjAuMjIiLz48Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIxOSIgc3Ryb2tlPSJ1cmwoI25lbykiIHN0cm9rZS13aWR0aD0iNiIvPjxwYXRoIGQ9Ik00MSA0MSBMNTEgNTEiIHN0cm9rZT0idXJsKCNuZW8pIiBzdHJva2Utd2lkdGg9IjEwIiBvcGFjaXR5PSIwLjIyIi8+PHBhdGggZD0iTTQxIDQxIEw1MSA1MSIgc3Ryb2tlPSJ1cmwoI25lbykiIHN0cm9rZS13aWR0aD0iNiIvPjwvZz48Y2lyY2xlIGN4PSI1NCIgY3k9IjEwIiByPSIzIiBmaWxsPSJ1cmwoI25lbykiIG9wYWNpdHk9IjAuOSIvPjwvc3ZnPg==">
+
+
+  <!-- Clean, modern AI-startup typeface (with robust fallbacks) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&display=swap" rel="stylesheet">
@@ -18,16 +23,9 @@
       --fg0:rgba(255,255,255,.92);
       --fg1:rgba(255,255,255,.60);
       --line:rgba(255,255,255,.08);
-
-      /* Text gradient stops (intentionally no near-black stops) */
-      --g1: rgba(255,255,255,.96);
-      --g2: rgba(0,255,209,.90);
-      --g3: rgba(0,176,255,.88);
-      --g4: rgba(170,140,255,.94);
-      --g5: rgba(255,104,200,.88);
-
-      /* One “tile” width for perfect looping */
-      --gradW: clamp(560px, 120vw, 1600px);
+      --a1: rgba(109, 83, 255, .55); /* violet */
+      --a2: rgba(0, 255, 209, .42);   /* mint */
+      --a3: rgba(0, 176, 255, .26);   /* cyan */
     }
 
     *{ box-sizing:border-box; }
@@ -45,6 +43,7 @@
       overflow:hidden;
     }
 
+    /* Flat, technical overlays: grid + scanline + micro-noise */
     body::before{
       content:"";
       position:fixed;
@@ -83,6 +82,7 @@
       position:relative;
     }
 
+    /* Centered slogan: no card, no blur, just type + a precise underline */
     .slogan{
       text-align:center;
       max-width: 980px;
@@ -95,49 +95,49 @@
       letter-spacing: -0.03em;
       line-height: 1.08;
 
+      /* Responsive type that can wrap naturally */
       font-size: clamp(28px, 6vw, 68px);
       white-space: normal;
       overflow-wrap: break-word;
-      text-wrap: balance;
+      text-wrap: balance; /* supported in modern browsers; harmless fallback elsewhere */
     }
 
     .grad{
-      display:inline-block;
+      background: linear-gradient(90deg,
+        rgba(255,255,255,.92) 0%,
+        rgba(255,255,255,.92) 40%,
+        rgba(0,255,209,.86) 68%,
+        rgba(109,83,255,.88) 100%);
 
-      /* Seamless looping gradient tile (start and end colors match) */
-      background-image: linear-gradient(90deg,
-        var(--g1) 0%,
-        var(--g2) 18%,
-        var(--g3) 38%,
-        var(--g4) 60%,
-        var(--g5) 82%,
-        var(--g1) 100%);
-
-      background-size: var(--gradW) 100%;
-      background-repeat: repeat;
-      background-position: 0px 50%;
+      /* smoother, loop-safe motion (no snap back) */
+      background-size: 200% 100%;
+      background-position: 0% 50%;
 
       -webkit-background-clip:text;
       background-clip:text;
       color: transparent;
       -webkit-text-fill-color: transparent;
 
-      /* IMPORTANT: one-direction loop (no alternate) */
       animation:
         titleIn 700ms cubic-bezier(.22, 1, .36, 1) both,
-        gradLoop 6.8s linear infinite;
+        gradShift 8s ease-in-out infinite alternate;
       will-change: background-position, transform, opacity;
     }
 
     @keyframes titleIn{
-      from{ opacity:0; transform: translateY(10px); }
-      to  { opacity:1; transform: translateY(0); }
+      from{
+        opacity:0;
+        transform: translateY(10px);
+      }
+      to{
+        opacity:1;
+        transform: translateY(0);
+      }
     }
 
-    /* “по кругу” слева направо: сдвигаем ровно на ширину тайла */
-    @keyframes gradLoop{
-      from { background-position: 0px 50%; }
-      to   { background-position: var(--gradW) 50%; }
+    @keyframes gradShift{
+      from { background-position: 0% 50%; }
+      to   { background-position: 100% 50%; }
     }
 
     .slogan::after{
@@ -151,6 +151,7 @@
       background: linear-gradient(90deg, transparent, rgba(255,255,255,.22), transparent);
     }
 
+    /* Accent vector (flat): thin corner marks around the text */
     .marks{
       position:absolute;
       inset: -22px -26px;
@@ -173,6 +174,7 @@
         linear-gradient(var(--line), var(--line)) right 0 bottom 0 / 1px 22px no-repeat;
     }
 
+    /* Bottom copyright (flat, no pill) */
     footer{
       position:fixed;
       left:0;
@@ -191,6 +193,7 @@
       user-select:none;
     }
 
+    /* Light mode (keeps flat look) */
     @media (prefers-color-scheme: light){
       :root{
         --bg0:#F8FAFF;
@@ -198,15 +201,7 @@
         --fg0:rgba(8,12,22,.92);
         --fg1:rgba(8,12,22,.56);
         --line:rgba(8,12,22,.12);
-
-        /* Light mode: still colored, no black-like stops */
-        --g1: rgba(30,120,255,.96);
-        --g2: rgba(0,190,170,.92);
-        --g3: rgba(0,150,255,.92);
-        --g4: rgba(150,95,255,.92);
-        --g5: rgba(255,90,180,.90);
       }
-
       body{
         background:
           radial-gradient(1100px 600px at 50% -12%, rgba(109,83,255,.20), transparent 60%),
@@ -215,11 +210,30 @@
           linear-gradient(180deg, var(--bg0), var(--bg1));
       }
       body::after{ opacity:.035; }
+
+      .grad{
+        background: linear-gradient(90deg,
+          rgba(10,14,26,.94) 0%,
+          rgba(10,14,26,.94) 42%,
+          rgba(0,150,125,.84) 72%,
+          rgba(92,60,210,.88) 100%);
+        background-size: 200% 100%;
+        background-position: 0% 50%;
+        -webkit-background-clip:text;
+        background-clip:text;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+
+        animation:
+          titleIn 700ms cubic-bezier(.22, 1, .36, 1) both,
+          gradShift 8s ease-in-out infinite alternate;
+      }
     }
 
+    /* Accessibility: reduce visual noise if user prefers reduced motion */
     @media (prefers-reduced-motion: reduce){
       body::after{ opacity:.03; }
-      .grad{ animation: none; background-position: 0px 50%; }
+      .grad{ animation: none; background-position: 50% 50%; }
     }
   </style>
 </head>
